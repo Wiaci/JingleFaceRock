@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<h:head>
+    <h:outputStylesheet name="style.css" library="css" />
+    <title>Я вижу лица</title>
+</h:head>
+
+<h:body>
+    <div id="wrapper">
+        <div id="left">
+            <div id="graph">
+                <svg id="svg" width="300" height="300" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="150,0 144,15 156,15" stroke="black"/>
+                    <polygon points="300,150 285,156 285,144" stroke="black"/>
+
+                    <polygon points="150,150 150,50 250,50 250,150" fill="#c10416"/>
+                    <path class="svg-figure circle-figure" d="M 150 50 A 100 100, 90, 0, 0, 50 150 L 150 150 Z"
+                          fill="#c10416"/>
+                    <polygon points="150,150 150,250 100,150" fill="#c10416"/>
+
+                    <line class="axis" x1="0" x2="300" y1="150" y2="150" stroke="black"/>
+                    <line class="axis" x1="150" x2="150" y1="0" y2="300" stroke="black"/>
+
+                    <line class="coor-line" x1="200" x2="200" y1="155" y2="145" stroke="black"/>
+                    <line class="coor-line" x1="250" x2="250" y1="155" y2="145" stroke="black"/>
+
+                    <line class="coor-line" x1="50" x2="50" y1="155" y2="145" stroke="black"/>
+                    <line class="coor-line" x1="100" x2="100" y1="155" y2="145" stroke="black"/>
+
+                    <line class="coor-line" x1="145" x2="155" y1="100" y2="100" stroke="black"/>
+                    <line class="coor-line" x1="145" x2="155" y1="50" y2="50" stroke="black"/>
+
+                    <line class="coor-line" x1="145" x2="155" y1="200" y2="200" stroke="black"/>
+                    <line class="coor-line" x1="145" x2="155" y1="250" y2="250" stroke="black"/>
+
+                    <text class="coor-text" x="195" y="140">R/2</text>
+                    <text class="coor-text" x="248" y="140">R</text>
+
+                    <text class="coor-text" x="40" y="140">-R</text>
+                    <text class="coor-text" x="90" y="140">-R/2</text>
+
+                    <text class="coor-text" x="160" y="105">R/2</text>
+                    <text class="coor-text" x="160" y="55">R</text>
+
+                    <text class="coor-text" x="160" y="205">-R/2</text>
+                    <text class="coor-text" x="160" y="255">-R</text>
+                </svg>
+            </div>
+
+            <div id="form">
+                <h:form action="node" method="post">
+                    <h:outputLabel value="X: "/>
+                    <p:spinner min="-5" max="5" value="#{point.x}" onchange="setX(this.value)"/> <br/>
+
+                    <h:outputLabel value="Y: "/>
+                    <h:inputText id="ytext" value="#{point.y}" onchange="setY(this.value)"/>
+                    <span id="incorrect"/><br/>
+
+                    <h:outputLabel value="R: "/>
+                    <h:selectOneMenu value="#{point.r}" onchange="setR(this.value)">
+                        <f:selectItem itemLabel="1" itemValue="1" />
+                        <f:selectItem itemLabel="2" itemValue="2" />
+                        <f:selectItem itemLabel="3" itemValue="3" />
+                        <f:selectItem itemLabel="4" itemValue="4" />
+                        <f:selectItem itemLabel="5" itemValue="5" />
+                    </h:selectOneMenu> <br/>
+
+                    <p:remoteCommand name="load" update="table" action="#{point.addPoint}"/>
+                    <p:remoteCommand name="clearTable" update="table" action="#{point.clear}"/>
+                    <button id="submit">Submit</button>
+                    <button id="clear">Очистить</button> <br/>
+                    <h:link value="На старт"/>
+
+                </h:form>
+            </div>
+        </div>
+
+        <h:dataTable id="table" value="#{point.points}" var="p">
+            <h:column>
+                <f:facet name="header">X</f:facet>
+                <label class="x-val">#{p.x}</label>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Y</f:facet>
+                <label class="y-val">#{p.y}</label>
+            </h:column>
+            <h:column>
+                <f:facet name="header">R</f:facet>
+                <h:outputText value="#{p.r}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Попадание</f:facet>
+                <h:outputText value="#{p.inArea}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Время</f:facet>
+                <h:outputText value="#{p.date}"/>
+            </h:column>
+        </h:dataTable>
+    </div>
+
+    <h:outputScript library="scripts" name="script.js"/>
+    <h:outputScript library="primefaces" name="jquery/jquery.js"/>
+</h:body>
+</html>
