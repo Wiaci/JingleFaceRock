@@ -1,45 +1,61 @@
 <?xml version="1.0"?>
 <project name="MispiLab3" default="build">
 
+	<property name="repos.name" value="https://github.com/Wiaci/JingleFaceRock"/>
+	<property name="dest.folder" value="target"/>
+	<property name="source.folder" value="src"/>
+	<property name="war.name" value="MispiLab3.war"/>
+	<property name="war.destfile" value="${dest.folder}/${war.name}"/>
+	<property name="webxml.path" value="${source.folder}/main/webapp/WEB-INF/web.xml"/>
+	<property name="webapp.path" value="${source.folder}/main/webapp"/>
+	<property name="classes.path" value="${dest.folder}/classes"/>
+	<property name="javafiles.path" value="${source.folder}/main/java"/>
+	<property name="resources.path" value="${source.folder}/main/resources"/>
+	<property name="dest.webapp.path" value="${dest.folder}/MispiLab3-v1"/>
+	<property name="" value=""/>
+
 	<path id="libpath">
 		<fileset dir="lib"/>
 	</path>
 
-	<path id="classespath">
+	<!-- <path id="classespath">
 		<pathelement location="lib"></pathelement>
 		<pathelement location="src/main/java"></pathelement>
 	</path>
-
-	<target name="compile">
-		<mkdir dir="target/classes"/>
-		<javac destdir="target/classes" classpathref="libpath">
-			<src path="src/main/java"/>
-		</javac>
-		<copy todir="target/classes">
-	        <fileset dir="src/main/resources"/>
-    	</copy>
-
-    	<mkdir dir="target/MispiLab3-v1"/>
-    	<copy todir="target/MispiLab3-v1">
-    		<fileset dir="src/main/webapp"/>
-    	</copy>
-
-    	<mkdir dir="target/test-classes"/>
-    	<javac destdir="target/test-classes" classpathref="classespath">
-    		<src path="src/test/java"/>
-    	</javac>
-	</target>
-
+ -->
 	<target name="build" depends="compile">
-		<war destfile="target/MispiLab3.war" webxml="src/main/webapp/WEB-INF/web.xml">
-			<fileset dir="src/main/webapp"/>
+		<war destfile="${war.destfile}" webxml="${webxml.path}">
+			<fileset dir="${webapp.path}"/>
 			<lib dir="lib"/>
-			<classes dir="target/classes"></classes>
+			<classes dir="${classes.path}"></classes>
 		</war>
 	</target>
 
+	<target name="compile">
+		<mkdir dir="${classes.path}"/>
+		<javac destdir="${classes.path}" classpathref="libpath">
+			<src path="${javafiles.path}"/>
+		</javac>
+		<copy todir="${classes.path}">
+	        <fileset dir="${resources.path}"/>
+    	</copy>
+
+    	<mkdir dir="${dest.webapp.path}"/>
+    	<copy todir="${dest.webapp.path}">
+    		<fileset dir="${webapp.path}"/>
+    	</copy>
+
+    	<!-- <mkdir dir="target/test-classes"/>
+    	<javac destdir="target/test-classes" classpathref="classespath">
+    		<src path="src/test/java"/>
+    	</javac> -->
+	</target>
+
+	
+
 	<target name="clean">
 		<delete dir="target"/>
+		<delete dir="reposCopy"/>
 	</target>
 
 	<target name="test" depends="build">
@@ -54,7 +70,20 @@
 	<target name="xml">
 		
 	</target>
+
 	<target name="team">
-		<cvs ></cvs>
+		<mkdir dir="reposCopy/target"/>
+		<exec executable="git" dir="reposCopy">
+			<arg value="clone"/>
+			<arg value="${repos.name}"/>
+		</exec>
+
+
+		<antcall target="build">
+			<param name="war.destfile" value="reposCopy/target/MispiLab3_1.war"/>
+			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
+			<param name="dest.folder" value="reposCopy/target"/>
+			<param name="war.name" value="MispiLab3_1.war"/>
+		</antcall>
 	</target>	
 </project>
