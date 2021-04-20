@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<project name="MispiLab3" default="build">
+
+	<path id="libpath">
+		<fileset dir="lib"/>
+	</path>
+
+	<path id="classespath">
+		<pathelement location="lib"></pathelement>
+		<pathelement location="src/main/java"></pathelement>
+	</path>
+
+	<target name="compile">
+		<mkdir dir="target/classes"/>
+		<javac destdir="target/classes" classpathref="libpath">
+			<src path="src/main/java"/>
+		</javac>
+		<copy todir="target/classes">
+	        <fileset dir="src/main/resources"/>
+    	</copy>
+
+    	<mkdir dir="target/MispiLab3-v1"/>
+    	<copy todir="target/MispiLab3-v1">
+    		<fileset dir="src/main/webapp"/>
+    	</copy>
+
+    	<mkdir dir="target/test-classes"/>
+    	<javac destdir="target/test-classes" classpathref="classespath">
+    		<src path="src/test/java"/>
+    	</javac>
+	</target>
+
+	<target name="build" depends="compile">
+		<war destfile="target/MispiLab3.war" webxml="src/main/webapp/WEB-INF/web.xml">
+			<fileset dir="src/main/webapp"/>
+			<lib dir="lib"/>
+			<classes dir="target/classes"></classes>
+		</war>
+	</target>
+
+	<target name="clean">
+		<delete dir="target"/>
+	</target>
+
+	<target name="test" depends="build">
+		<junit printsummary="yes" haltonfailure="yes">
+			<formatter type="plain"/>
+			<batchtest todir="target/testresults">
+				<fileset dir="src/test/java"/>
+			</batchtest>
+		</junit>
+	</target>
+
+	<target name="xml">
+		
+	</target>
+	<target name="team">
+		<cvs ></cvs>
+	</target>	
+</project>
