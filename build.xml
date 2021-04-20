@@ -73,17 +73,82 @@
 
 	<target name="team">
 		<mkdir dir="reposCopy/target"/>
+		<mkdir dir="commit-wars"/>
 		<exec executable="git" dir="reposCopy">
 			<arg value="clone"/>
 			<arg value="${repos.name}"/>
 		</exec>
 
 
-		<antcall target="build">
-			<param name="war.destfile" value="reposCopy/target/MispiLab3_1.war"/>
+		<antcall target="build" inheritAll="false">
 			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
 			<param name="dest.folder" value="reposCopy/target"/>
 			<param name="war.name" value="MispiLab3_1.war"/>
 		</antcall>
+
+		<copy todir="commit-wars">
+	        <fileset dir="reposCopy/target">
+	        	<include name="MispiLab3_1.war"></include>
+	        </fileset>
+    	</copy>
+
+
+		<exec executable="git" dir="reposCopy/JingleFaceRock/">
+			<arg value="reset"/>
+			<arg value="--hard"/>
+			<arg value="HEAD~1"/>
+		</exec>
+
+
+		<antcall target="build" inheritAll="false">
+			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
+			<param name="dest.folder" value="reposCopy/target"/>
+			<param name="war.name" value="MispiLab3_2.war"/>
+		</antcall>
+
+		<copy todir="commit-wars">
+	        <fileset dir="reposCopy/target">
+	        	<include name="MispiLab3_2.war"></include>
+	        </fileset>
+    	</copy>
+
+    	<exec executable="git" dir="reposCopy/JingleFaceRock/">
+			<arg value="reset"/>
+			<arg value="--hard"/>
+			<arg value="HEAD~1"/>
+		</exec>
+
+
+		<antcall target="build" inheritAll="false">
+			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
+			<param name="dest.folder" value="reposCopy/target"/>
+			<param name="war.name" value="MispiLab3_3.war"/>
+		</antcall>
+
+		<copy todir="commit-wars">
+	        <fileset dir="reposCopy/target">
+	        	<include name="MispiLab3_3.war"></include>
+	        </fileset>
+    	</copy>
+
+    	<exec executable="git" dir="reposCopy/JingleFaceRock/">
+			<arg value="reset"/>
+			<arg value="--hard"/>
+			<arg value="HEAD~1"/>
+		</exec>
+
+		<antcall target="build" inheritAll="false">
+			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
+			<param name="dest.folder" value="reposCopy/target"/>
+			<param name="war.name" value="MispiLab3_4.war"/>
+		</antcall>
+
+		<copy todir="commit-wars">
+	        <fileset dir="reposCopy/target">
+	        	<include name="MispiLab3_4.war"></include>
+	        </fileset>
+    	</copy>
+
+    	<!-- <delete dir="reposCopy"/> -->
 	</target>	
 </project>
