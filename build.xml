@@ -15,7 +15,6 @@
 	<property name="dest.webapp.path" value="${dest.folder}/MispiLab3-v1"/>
 	<property name="test-classes.path" value="${dest.folder}/test-classes"/>
 	<property name="tests.path" value="${source.folder}/test/java"/>
-	<property name="" value=""/>
 
 	<path id="libpath">
 		<fileset dir="lib"/>
@@ -24,8 +23,8 @@
 	<path id="classespath">
 		<pathelement location="lib/junit-4.12.jar"></pathelement>
 		<pathelement location="lib/hamcrest-core-1.3.jar"></pathelement>
-		<pathelement location="lib/javaee-web-api-8.0.1.jar"></pathelement>
-		<pathelement location="target/classes"></pathelement>
+		<pathelement location="lib/javaee-web-api-7.0.jar"></pathelement>
+		<pathelement location="${classes.path}"></pathelement>
 	</path>
 
 	<target name="build" depends="compile">
@@ -50,10 +49,6 @@
     		<fileset dir="${webapp.path}"/>
     	</copy>
 
-    	<!-- <mkdir dir="target/test-classes"/>
-    	<javac destdir="target/test-classes" classpathref="classespath">
-    		<src path="src/test/java"/>
-    	</javac> -->
 	</target>
 
 	
