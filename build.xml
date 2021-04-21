@@ -91,7 +91,6 @@
 			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
 			<param name="dest.folder" value="reposCopy/target"/>
 			<param name="war.name" value="MispiLab3_1.war"/>
-			<param name="lib.path" value="reposCopy/JingleFaceRock/lib"/>
 		</antcall>
 
 		<copy todir="commit-wars">
@@ -112,7 +111,6 @@
 			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
 			<param name="dest.folder" value="reposCopy/target"/>
 			<param name="war.name" value="MispiLab3_2.war"/>
-			<param name="lib.path" value="reposCopy/JingleFaceRock/lib"/>
 		</antcall>
 
 		<copy todir="commit-wars">
@@ -132,7 +130,6 @@
 			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
 			<param name="dest.folder" value="reposCopy/target"/>
 			<param name="war.name" value="MispiLab3_3.war"/>
-			<param name="lib.path" value="reposCopy/JingleFaceRock/lib"/>
 		</antcall>
 
 		<copy todir="commit-wars">
@@ -151,7 +148,6 @@
 			<param name="source.folder" value="reposCopy/JingleFaceRock/src"/>
 			<param name="dest.folder" value="reposCopy/target"/>
 			<param name="war.name" value="MispiLab3_4.war"/>
-			<param name="lib.path" value="reposCopy/JingleFaceRock/lib"/>
 		</antcall>
 
 		<copy todir="commit-wars">
